@@ -400,44 +400,56 @@ endfunction ">>>
 "|    keyboard mappings, Tab management                                    <<<
 "|============================================================================
 
-" Alt+[0..9]: select Tab [1..10] <<<
-if g:MetaSendsEscape
-  noremap <silent> <Esc>1 :tabn  1<CR>
-  noremap <silent> <Esc>2 :tabn  2<CR>
-  noremap <silent> <Esc>3 :tabn  3<CR>
-  noremap <silent> <Esc>4 :tabn  4<CR>
-  noremap <silent> <Esc>5 :tabn  5<CR>
-  noremap <silent> <Esc>6 :tabn  6<CR>
-  noremap <silent> <Esc>7 :tabn  7<CR>
-  noremap <silent> <Esc>8 :tabn  8<CR>
-  noremap <silent> <Esc>9 :tabn  9<CR>
-  noremap <silent> <Esc>0 :tabn 10<CR>
-else
-  noremap <silent>  <A-1> :tabn  1<CR>
-  noremap <silent>  <A-2> :tabn  2<CR>
-  noremap <silent>  <A-3> :tabn  3<CR>
-  noremap <silent>  <A-4> :tabn  4<CR>
-  noremap <silent>  <A-5> :tabn  5<CR>
-  noremap <silent>  <A-6> :tabn  6<CR>
-  noremap <silent>  <A-7> :tabn  7<CR>
-  noremap <silent>  <A-8> :tabn  8<CR>
-  noremap <silent>  <A-9> :tabn  9<CR>
-  noremap <silent>  <A-0> :tabn 10<CR>
-endif
+function! DefineWindowMappingsWith(pre, post)
+
+" Alt+[hjkl]: select window <<<
+  execute 'noremap <silent> ' . a:pre . 'h' . a:post . ' :call WindowCmd("h")<CR>'
+  execute 'noremap <silent> ' . a:pre . 'j' . a:post . ' :call WindowCmd("j")<CR>'
+  execute 'noremap <silent> ' . a:pre . 'k' . a:post . ' :call WindowCmd("k")<CR>'
+  execute 'noremap <silent> ' . a:pre . 'l' . a:post . ' :call WindowCmd("l")<CR>'
 ">>>
 
-" <Leader>[1..0]: select Tab [1..10] <<<
-noremap <silent> <Leader>1 :tabn  1<CR>
-noremap <silent> <Leader>2 :tabn  2<CR>
-noremap <silent> <Leader>3 :tabn  3<CR>
-noremap <silent> <Leader>4 :tabn  4<CR>
-noremap <silent> <Leader>5 :tabn  5<CR>
-noremap <silent> <Leader>6 :tabn  6<CR>
-noremap <silent> <Leader>7 :tabn  7<CR>
-noremap <silent> <Leader>8 :tabn  8<CR>
-noremap <silent> <Leader>9 :tabn  9<CR>
-noremap <silent> <Leader>0 :tabn 10<CR>
+" Alt+[HJKL]: move current window <<<
+
+  " Todo, maybe we need to translate <A-H> to <S-A-h>, but I can't test this atm
+  execute 'noremap <silent>  ' . a:pre . 'H' . a:post . ' :call WindowMove("h")<CR>'
+  execute 'noremap <silent>  ' . a:pre . 'J' . a:post . ' :call WindowMove("j")<CR>'
+  execute 'noremap <silent>  ' . a:pre . 'K' . a:post . ' :call WindowMove("k")<CR>'
+  execute 'noremap <silent>  ' . a:pre . 'L' . a:post . ' :call WindowMove("l")<CR>'
 ">>>
+
+" Alt+[0..9]: select Tab [1..10] <<<
+  execute 'noremap <silent> ' . a:pre . '1' . a:post . ' :tabn  1<CR>'
+  execute 'noremap <silent> ' . a:pre . '2' . a:post . ' :tabn  2<CR>'
+  execute 'noremap <silent> ' . a:pre . '3' . a:post . ' :tabn  3<CR>'
+  execute 'noremap <silent> ' . a:pre . '4' . a:post . ' :tabn  4<CR>'
+  execute 'noremap <silent> ' . a:pre . '5' . a:post . ' :tabn  5<CR>'
+  execute 'noremap <silent> ' . a:pre . '6' . a:post . ' :tabn  6<CR>'
+  execute 'noremap <silent> ' . a:pre . '7' . a:post . ' :tabn  7<CR>'
+  execute 'noremap <silent> ' . a:pre . '8' . a:post . ' :tabn  8<CR>'
+  execute 'noremap <silent> ' . a:pre . '9' . a:post . ' :tabn  9<CR>'
+  execute 'noremap <silent> ' . a:pre . '0' . a:post . ' :tabn 10<CR>'
+">>>
+
+" Alt+[sdf]: Window mode selection <<<
+  execute 'noremap <silent> ' . a:pre . 's' . a:post . ' :call SetTilingMode("S")<CR>'
+  execute 'noremap <silent> ' . a:pre . 'd' . a:post . ' :call SetTilingMode("D")<CR>'
+  execute 'noremap <silent> ' . a:pre . 'f' . a:post . ' :call SetTilingMode("F")<CR>'
+">>>
+
+" Alt+[oO]: new horizontal/vertical window
+" Alt+[cC]: collapse/close current window
+  execute 'noremap <silent>  ' . a:pre . 'o' . a:post . ' :call WindowCmd("n")<CR>'
+  "execute 'noremap <silent>  ' . a:pre . 'O' . a:post . ' :call WindowCmd("n")<CR>:call WindowMove("l")<CR>'
+  execute 'noremap <silent>  ' . a:pre . 'c' . a:post . ' :call WindowCollapse()<CR>'
+  execute 'noremap <silent>  ' . a:pre . 'C' . a:post . ' :call WindowCmd("c")<CR>'
+">>>
+endfunction
+
+" Todo: Implement
+call DefineWindowMappingsWith('<Esc>','')
+call DefineWindowMappingsWith('<A-', '>')
+call DefineWindowMappingsWith('<leader>','')
 
 " <Leader>t[1..0]: move current window to Tab [1..10] <<<
 noremap <silent> <Leader>t1 :call MoveToTab( 1,0)<CR>
@@ -471,38 +483,9 @@ noremap <silent> <Leader>T0 :call MoveToTab(10,1)<CR>
 "|    keyboard mappings, Window management                                 <<<
 "|============================================================================
 
-" Alt+[sdf]: Window mode selection <<<
-if g:MetaSendsEscape
-  noremap <silent> <Esc>s :call SetTilingMode("S")<CR>
-  noremap <silent> <Esc>d :call SetTilingMode("D")<CR>
-  noremap <silent> <Esc>f :call SetTilingMode("F")<CR>
-else
-  noremap <silent>  <A-s> :call SetTilingMode("S")<CR>
-  noremap <silent>  <A-d> :call SetTilingMode("D")<CR>
-  noremap <silent>  <A-f> :call SetTilingMode("F")<CR>
-endif
-">>>
-
-" Alt+[hjkl]: select window <<<
-if g:MetaSendsEscape
-  noremap <silent> <Esc>h :call WindowCmd("h")<CR>
-  noremap <silent> <Esc>j :call WindowCmd("j")<CR>
-  noremap <silent> <Esc>k :call WindowCmd("k")<CR>
-  noremap <silent> <Esc>l :call WindowCmd("l")<CR>
-else
-  noremap <silent>  <A-h> :call WindowCmd("h")<CR>
-  noremap <silent>  <A-j> :call WindowCmd("j")<CR>
-  noremap <silent>  <A-k> :call WindowCmd("k")<CR>
-  noremap <silent>  <A-l> :call WindowCmd("l")<CR>
-endif
-">>>
-
 " Alt+[HJKL]: move current window <<<
 if g:MetaSendsEscape
-  noremap <silent>  <Esc>H :call WindowMove("h")<CR>
-  noremap <silent>  <Esc>J :call WindowMove("j")<CR>
-  noremap <silent>  <Esc>K :call WindowMove("k")<CR>
-  noremap <silent>  <Esc>L :call WindowMove("l")<CR>
+
 else
   noremap <silent> <S-A-h> :call WindowMove("h")<CR>
   noremap <silent> <S-A-j> :call WindowMove("j")<CR>
@@ -534,10 +517,7 @@ endif
 " Alt+[oO]: new horizontal/vertical window
 " Alt+[cC]: collapse/close current window
 if g:MetaSendsEscape
-  noremap <silent>  <Esc>o :call WindowCmd("n")<CR>
-  "noremap <silent>  <Esc>O :call WindowCmd("n")<CR>:call WindowMove("l")<CR>
-  noremap <silent>  <Esc>c :call WindowCollapse()<CR>
-  noremap <silent>  <Esc>C :call WindowCmd("c")<CR>
+
 else
   noremap <silent>   <A-o> :call WindowCmd("n")<CR>
   "noremap <silent> <S-A-o> :call WindowCmd("n")<CR>:call WindowMove("l")<CR>
