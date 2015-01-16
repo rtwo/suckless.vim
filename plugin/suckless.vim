@@ -447,8 +447,8 @@ function! DefineWindowMappingsWith(pre, post)
 endfunction
 
 " Todo: Implement
-call DefineWindowMappingsWith('<Esc>','')
-call DefineWindowMappingsWith('<A-', '>')
+" call DefineWindowMappingsWith('<Esc>','')
+" call DefineWindowMappingsWith('<A-', '>')
 call DefineWindowMappingsWith('<leader>','')
 
 " <Leader>t[1..0]: move current window to Tab [1..10] <<<
@@ -487,24 +487,24 @@ noremap <silent> <Leader>T0 :call MoveToTab(10,1)<CR>
 if g:MetaSendsEscape
 
 else
-  noremap <silent> <S-A-h> :call WindowMove("h")<CR>
-  noremap <silent> <S-A-j> :call WindowMove("j")<CR>
-  noremap <silent> <S-A-k> :call WindowMove("k")<CR>
-  noremap <silent> <S-A-l> :call WindowMove("l")<CR>
+  " noremap <silent> <S-A-h> :call WindowMove("h")<CR>
+  " noremap <silent> <S-A-j> :call WindowMove("j")<CR>
+  " noremap <silent> <S-A-k> :call WindowMove("k")<CR>
+  " noremap <silent> <S-A-l> :call WindowMove("l")<CR>
 endif
 ">>>
 
 " Ctrl+Alt+[hjkl]: resize current window <<<
 if g:MetaSendsEscape
-  noremap <silent> <Esc><C-h> :call WindowResize("h")<CR>
-  noremap <silent> <Esc><C-j> :call WindowResize("j")<CR>
-  noremap <silent> <Esc><C-k> :call WindowResize("k")<CR>
-  noremap <silent> <Esc><C-l> :call WindowResize("l")<CR>
+  " noremap <silent> <Esc><C-h> :call WindowResize("h")<CR>
+  " noremap <silent> <Esc><C-j> :call WindowResize("j")<CR>
+  " noremap <silent> <Esc><C-k> :call WindowResize("k")<CR>
+  " noremap <silent> <Esc><C-l> :call WindowResize("l")<CR>
 else
-  noremap <silent>    <C-A-h> :call WindowResize("h")<CR>
-  noremap <silent>    <C-A-j> :call WindowResize("j")<CR>
-  noremap <silent>    <C-A-k> :call WindowResize("k")<CR>
-  noremap <silent>    <C-A-l> :call WindowResize("l")<CR>
+  " noremap <silent>    <C-A-h> :call WindowResize("h")<CR>
+  " noremap <silent>    <C-A-j> :call WindowResize("j")<CR>
+  " noremap <silent>    <C-A-k> :call WindowResize("k")<CR>
+  " noremap <silent>    <C-A-l> :call WindowResize("l")<CR>
 endif
 ">>>
 
@@ -519,10 +519,10 @@ endif
 if g:MetaSendsEscape
 
 else
-  noremap <silent>   <A-o> :call WindowCmd("n")<CR>
+  " noremap <silent>   <A-o> :call WindowCmd("n")<CR>
   "noremap <silent> <S-A-o> :call WindowCmd("n")<CR>:call WindowMove("l")<CR>
-  noremap <silent>   <A-c> :call WindowCollapse()<CR>
-  noremap <silent> <S-A-c> :call WindowCmd("c")<CR>
+  " noremap <silent>   <A-c> :call WindowCollapse()<CR>
+  " noremap <silent> <S-A-c> :call WindowCmd("c")<CR>
 endif
 ">>>
 
